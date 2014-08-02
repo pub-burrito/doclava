@@ -16,15 +16,14 @@
 
 package doclava;
 
-import com.google.doclava.Errors;
-import com.google.doclava.Errors.Error;
-import com.google.doclava.Errors.ErrorMessage;
-import com.google.doclava.apicheck.ApiCheck;
-import com.google.doclava.apicheck.ApiCheck.Report;
+import java.util.Iterator;
 
 import junit.framework.TestCase;
 
-import java.util.Iterator;
+import com.google.doclava.Errors;
+import com.google.doclava.Errors.ErrorMessage;
+import com.google.doclava.apicheck.ApiCheck;
+import com.google.doclava.apicheck.ApiCheck.Report;
 
 public class ApiCheckTest extends TestCase {
   /**
@@ -210,7 +209,7 @@ public class ApiCheckTest extends TestCase {
     ApiCheck apiCheck = new ApiCheck();
     Report report = apiCheck.checkApi(args);
     assertEquals(1, report.errors().size());
-    assertEquals(Errors.CHANGED_FINAL, report.errors().iterator().next().error());
+    assertEquals(Errors.ADDED_FINAL, report.errors().iterator().next().error());
   }
   
   public void testChangedFinalMethod() {
@@ -218,23 +217,23 @@ public class ApiCheckTest extends TestCase {
     ApiCheck apiCheck = new ApiCheck();
     Report report = apiCheck.checkApi(args);
     assertEquals(1, report.errors().size());
-    assertEquals(Errors.CHANGED_FINAL, report.errors().iterator().next().error());
+    assertEquals(Errors.ADDED_FINAL, report.errors().iterator().next().error());
   }
   
   public void testChangedFinalClass() {
     String[] args = { "test/api/constants.xml", "test/api/changed-final3.xml" };
     ApiCheck apiCheck = new ApiCheck();
     Report report = apiCheck.checkApi(args);
-    assertEquals(1, report.errors().size());
-    assertEquals(Errors.CHANGED_FINAL, report.errors().iterator().next().error());
+    assertEquals(3, report.errors().size());
+    assertEquals(Errors.ADDED_FINAL, report.errors().iterator().next().error());
   }
   
   public void testChangedFinalClass2() {
     String[] args = { "test/api/changed-final3.xml", "test/api/constants.xml" };
     ApiCheck apiCheck = new ApiCheck();
     Report report = apiCheck.checkApi(args);
-    assertEquals(1, report.errors().size());
-    assertEquals(Errors.CHANGED_FINAL, report.errors().iterator().next().error());
+    assertEquals(3, report.errors().size());
+    assertEquals(Errors.REMOVED_FINAL, report.errors().iterator().next().error());
   }
   
   public void testAddedField() {
