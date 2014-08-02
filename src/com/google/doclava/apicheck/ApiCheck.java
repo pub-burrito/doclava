@@ -24,7 +24,6 @@ import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.Stack;
 
 import com.google.doclava.Errors;
 import com.google.doclava.Errors.ErrorMessage;
@@ -126,7 +125,15 @@ public class ApiCheck {
     Throwable textParsingError = null;
     // try it as our format
     try {
-      stream = new FileInputStream(filename);
+      try
+      {
+    	  stream = new URL(filename).openStream();
+      }
+      catch (Exception ue) {
+    	  //System.err.println("Could not open \"" + filename + "\" as URL, trying as file path (" + ue + ")");
+    	  
+    	  stream = new FileInputStream(filename);
+      }
     } catch (IOException e) {
       throw new ApiParseException("Could not open file for parsing: " + filename, e);
     }
