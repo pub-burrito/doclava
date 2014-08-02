@@ -16,12 +16,14 @@
 
 package com.google.doclava;
 
-import com.google.doclava.apicheck.ApiParseException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.common.base.Joiner;
+import com.google.doclava.apicheck.ApiParseException;
 
 /**
  * Cross-references documentation among different libraries. A FederationTagger
@@ -80,9 +82,20 @@ public final class FederationTagger {
         }
       } catch (ApiParseException e) {
         String error = "Could not add site for federation: " + name;
+        
         if (e.getMessage() != null) {
           error += ": " + e.getMessage();
         }
+        
+        String stackTraceDivider = "\n  ";
+        
+		error += "\n" + Joiner.on( stackTraceDivider ).join( e.getStackTrace() );
+        
+        if ( e.getCause() != null )
+        {
+        	error += String.format("\n caused by: %s\n%s", e.getCause(), Joiner.on( stackTraceDivider ).join( e.getCause().getStackTrace() ) );
+        }
+        
         Errors.error(Errors.NO_FEDERATION_DATA, null, error);
       }
     }
