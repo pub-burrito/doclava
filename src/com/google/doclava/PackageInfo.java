@@ -16,11 +16,16 @@
 
 package com.google.doclava;
 
-import com.google.doclava.apicheck.ApiInfo;
-import com.google.clearsilver.jsilver.data.Data;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Set;
 
-import com.sun.javadoc.*;
-import java.util.*;
+import com.google.clearsilver.jsilver.data.Data;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.doclava.apicheck.ApiInfo;
+import com.sun.javadoc.PackageDoc;
 
 public class PackageInfo extends DocInfo implements ContainerInfo {
   public static final String DEFAULT_PACKAGE = "default package";
@@ -83,7 +88,7 @@ public class PackageInfo extends DocInfo implements ContainerInfo {
 
   @Override
   public boolean isHidden() {
-    if (Doclava.hiddenPackages.contains(mName)) {
+    if (containsOrMatches(Doclava.hiddenPackages, mName) ) {
       return true;
     }
     return comment().isHidden();

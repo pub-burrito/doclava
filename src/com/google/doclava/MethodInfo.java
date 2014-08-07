@@ -16,11 +16,13 @@
 
 package com.google.doclava;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+
 import com.google.clearsilver.jsilver.data.Data;
 import com.google.doclava.apicheck.AbstractMethodInfo;
 import com.google.doclava.apicheck.ApiInfo;
-
-import java.util.*;
 
 public class MethodInfo extends MemberInfo implements AbstractMethodInfo, Resolvable {
   public static final Comparator<MethodInfo> comparator = new Comparator<MethodInfo>() {
@@ -864,4 +866,10 @@ public class MethodInfo extends MemberInfo implements AbstractMethodInfo, Resolv
 
       return allResolved;
   }
+  
+	@Override
+	public boolean isHidden()
+	{
+		return containsOrMatches(Doclava.hiddenMethods, mName) || super.isHidden();
+	}
 }

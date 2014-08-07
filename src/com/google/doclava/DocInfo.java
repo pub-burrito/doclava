@@ -16,11 +16,12 @@
 
 package com.google.doclava;
 
-import com.google.clearsilver.jsilver.data.Data;
-
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import com.google.clearsilver.jsilver.data.Data;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 
 public abstract class DocInfo {
   public DocInfo(String rawCommentText, SourcePositionInfo sp) {
@@ -112,6 +113,27 @@ public abstract class DocInfo {
       data.setValue(base + ".federated." + pos + ".name", source.name());
       pos++;
     }
+  }
+  
+  protected boolean containsOrMatches(Set<String> set, String name)
+  {
+  	return set.contains(name) || matchesRegExps(set, name);
+  }
+
+  protected boolean matchesRegExps(Set<String> hiddenSet, final String name)
+  {
+  	return 
+  		!Collections2
+  			.filter( 
+  				hiddenSet, 
+  				new Predicate<String>() {
+      	
+  					public boolean apply( String pattern )
+  					{
+  						return name.matches( pattern );
+  					}
+  				} 
+  			).isEmpty();
   }
 
   private String mRawCommentText;
