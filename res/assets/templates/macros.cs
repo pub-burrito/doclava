@@ -187,7 +187,7 @@ def:description(obj) ?><?cs
   /if ?><?cs 
   if:subcount(obj.paramTags) ?>
   <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
+      <h5 class="jd-tagtitle"><?cs if:obj.kind == "class" ?>Type <?cs /if ?>Parameters</h5>
       <table class="jd-tagtable"><?cs 
       each:tag=obj.paramTags ?>
         <tr>

@@ -160,8 +160,11 @@ Summary:
 <?cs call:deprecated_warning(class) ?>
 <?cs if:subcount(class.descr) ?>
 <h2>Class Overview</h2>
-<p itemprop="articleBody"><?cs call:tag_list(class.descr) ?></p>
+<p itemprop="articleBody"><?cs #call:tag_list(class.descr) ?></p>
 <?cs /if ?>
+<div class="jd-details-descr">
+   <?cs call:description(class) ?>
+</div>
 
 <?cs call:see_also_tags(class.seeAlso) ?>
 

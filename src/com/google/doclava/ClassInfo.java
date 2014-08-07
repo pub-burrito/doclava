@@ -947,6 +947,7 @@ public class ClassInfo extends DocInfo implements ContainerInfo, Comparable, Sco
 
     // class description
     TagInfo.makeHDF(data, "class.descr", inlineTags());
+    TagInfo.makeHDF(data, "class.paramTags", comment().paramTags());
     TagInfo.makeHDF(data, "class.seeAlso", comment().seeTags());
     TagInfo.makeHDF(data, "class.deprecated", deprecatedTags());
 
