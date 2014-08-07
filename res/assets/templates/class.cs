@@ -105,15 +105,18 @@ Summary:
   <?cs if:colspan == 2 ?>
     extends <?cs call:type_link(supr.short_class) ?><br/>
   <?cs /if ?>
-  <?cs if:last(supr) && subcount(supr.interfaces) ?>
-      implements 
-      <?cs each:t=supr.interfaces ?>
-        <?cs call:type_link(t) ?> 
-      <?cs /each ?>
+  <?cs if:subcount(supr.interfaces) ?>
+    <?cs set:interfaces[colspan] = subcount(supr.interfaces) ?>
   <?cs /if ?>
   <?cs set:colspan = colspan-1 ?>
 <?cs /each ?>
-
+<?cs if:subcount(interfaces) ?>
+    implements 
+    <?cs set:count = #0 ?>
+    <?cs each:supr = class.inheritance ?>
+      <?cs each:i=supr.interfaces ?><?cs if:count > 0 ?>,<?cs /if ?> <?cs call:type_link(i) ?><?cs set:count = count + #1 ?><?cs /each ?> 
+    <?cs /each ?>
+<?cs /if ?>
 </div><!-- end header -->
 
 <div id="naMessage"></div>
