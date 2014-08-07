@@ -38,6 +38,10 @@ public class ParamTagInfo extends ParsedTagInfo {
       int len = mParameterName.length();
       mIsTypeParameter =
           len > 2 && mParameterName.charAt(0) == '<' && mParameterName.charAt(len - 1) == '>';
+       if ( mIsTypeParameter )
+       {
+    	   mParameterName = mParameterName.substring( 1, mParameterName.length() - 1 );
+       }
     } else {
       mParameterName = text.trim();
       mParameterComment = "";
