@@ -16,12 +16,12 @@
 
 package com.google.doclava;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import com.google.doclava.apicheck.ApiCheck;
 import com.google.doclava.apicheck.ApiInfo;
 import com.google.doclava.apicheck.ApiParseException;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * A remote source of documentation that can be linked against. A federated
@@ -56,7 +56,7 @@ public final class FederatedSite {
   }
 
   public String linkFor(String htmlPage) {
-    return baseUrl + "/" + htmlPage;
+    return baseUrl + "/" + ( htmlPage.startsWith( Doclava.javadocDir ) ? htmlPage.substring( Doclava.javadocDir.length() ) : htmlPage );
   }
 
   public String name() {
